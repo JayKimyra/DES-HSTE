@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/style"></div>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="fragments/includes"></div>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="blog_left_sidebar">
+                <article class="blog_item">
+                    <form action="/auth" method="post">
+                        <div class="container">
+                            <h1>Auth</h1>
+                            <p>Введите данные.</p>
+                            <hr>
+
+                            <label for="login"><b>Login</b></label>
+                            <input type="text" placeholder="Login" name="login" id="login" required>
+
+                            <label for="password"><b>Password</b></label>
+                            <input type="password" placeholder="Password" name="password" id="password" required>
+                            <hr>
+                            <button type="submit" class="registerbtn">Log in</button>
+                        </div>
+                    </form>
+                </article>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

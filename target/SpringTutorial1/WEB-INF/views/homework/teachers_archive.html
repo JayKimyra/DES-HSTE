@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="fragments/includes"> This header content is going to be replaced.</div>
+</head>
+<body>
+<div class="row">
+    <div class="col-2 border">
+        <div th:replace="fragments/header" > This header content is going to be replaced.</div>
+    </div>
+    <div class="col-10 border">
+        <div th:each="homework : ${homeworkList}" >
+
+            <div>Задано:</div>
+            <div th:text="${homework.getTeacher().getLogin()}"></div>
+            <div>Ссылка на вариант:</div>
+            <a th:href="@{/variants/{id}(id=${homework.getVariant().getId()})}" th:text="${homework.getVariant().getId()}"></a>
+        </div>
+        <br/>
+        <hr/>
+    </div>
+    <br/>
+    <hr/>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/style"></div>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="fragments/includes"></div>
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+    <div class="row">
+            <article class="col-2 blog_item" th:each="variant,iter : ${variants}">
+                    <div class="blog_item_img">
+                        <img th:if="${variant.getImgUrl() != null}" width="150" height="150" th:src="${variant.getImgUrl()}" class="card-img rounded-0" alt="">
+                        <a th:href="@{/variants/{id}(id=${variant.getId()})}" class="blog_item_date">
+                            <h3 th:text="${variant.getId()}"></h3>
+                            <p>Вариант</p>
+                        </a>
+                    </div>
+
+                    <div class="blog_details">
+                        <!--<a class="d-inline-block" href="single-blog.html">
+                            <h2>Google inks pact for new 35-storey office</h2>
+                        </a>
+                        <p>That dominion stars lights dominion divide years for fourth have don't stars is that
+                            he earth it first without heaven in place seed it second morning saying.</p>-->
+                        <ul class="blog-info-link">
+                            <li><a href="#"><i class="fa fa-user"></i> <label th:text="${variant.getOwner().getLogin()}"></label> </a></li>
+                            <li><a href="#"><i class="fa fa-comments"></i> Заданий: <label th:text="${variant.getProblems().size()}"></label></a></li>
+                        </ul>
+                    </div>
+                </article>
+        </div>
+</div>
+
+
+
+
+</body>
+</html>

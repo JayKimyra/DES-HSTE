@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>problems/show</title>
+    <div th:replace="fragments/includes"> This header content is going to be replaced.</div>
+</head><body>
+<div class="row">
+    <div class="col-2 border">
+        <div th:replace="fragments/header" > This header content is going to be replaced.</div>
+    </div>
+    <div class="col-10 border">
+        <form action="/variants/check" method="post">
+            <input type="hidden" name="variant_id" th:value="${variant.getId()}">
+            <p th:text="${variant.getId()}"></p>
+            <div th:each="problem : ${variant.getProblems()}">
+                <label th:for="${problem.getId()}" th:text="${problem.getText()}"></label>
+                <input type="text" th:name="${problem.getId()}" th:id="${problem.getId()}">
+                <br/>
+            </div>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+    <br/>
+    <hr/>
+</div>
+</body>
+</html>
