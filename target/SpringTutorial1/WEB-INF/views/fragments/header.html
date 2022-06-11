@@ -1,0 +1,123 @@
+<!--
+<div class="border border-secondary h-100" style="background: rgba(0, 0, 0, 0.2);border-radius: 20px;">
+        <ul class="navbar-nav">
+            <li class="nav-item text-center"><a href="/problems">Задачи</a></li>
+            <li class="nav-item text-center"><a href="/variants">Варианты</a></li>
+            <li class="nav-item text-center" th:if="${session.user}"><a href="/my">Профиль</a></li>
+            <li class="nav-item text-center" th:if="${session.user}"><a th:href="${'/problems/user/' + session.user.getId()}" >Мои задачи</a></li>
+            <li class="nav-item text-center" th:if="${session.user}"><a href="/homework">Домашняя работа</a></li>
+            <li class="nav-item text-center"><a href="/init">Инициализация</a></li>
+            <li class="nav-item text-center" th:if="${session.user}"><a href="/users/request">Отправить запрос</a></li>
+            <li class="nav-item text-center" th:if="${session.user}"><a href="/users/requests">Заявки</a></li>
+            <li class="nav-item text-center" th:if="${session.user == null}"><a href="/auth">Авторизация</a></li>
+        </ul>
+</div>-->
+<header>
+    <div class="header-area ">
+        <div id="sticky-header" class="main-header-area">
+            <div class="container-fluid ">
+                <div class="header_bottom_border">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3 col-lg-2">
+                            <div class="logo">
+                                <a href="index.html">
+                                    <img src="img/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="/">Главная</a></li>
+                                        <li><a href="#">Варианты<i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="/variants">Все варианты</a></li>
+                                                <li><a th:if="${session.user != null}" th:href="${'/variants/user/' + session.user.getId()}">Мои варианты</a></li>
+                                                <li><a th:if="${session.user != null}" href="/variants/new">Создать вариант</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Задания<i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="/problems/">Все задания</a></li>
+                                                <li><a th:if="${session.user != null}" th:href="${'/problems/user/' + session.user.getId()}">Мои задания</a></li>
+                                                <li><a th:if="${session.user != null}" href="/problems/new">Создать задание</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Домашняя работа <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="/homework">Моя домашняя работа</a></li>
+                                                <li><a href="/homework/">Проверить</a></li>
+                                                <li><a href="/homework/archive">Архив</a></li>
+                                                <li><a href="/homework/teachers_archive">Учительский архив</a></li>
+                                                <li><a href="/homework/new">Задать</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Заявки <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="/users/requests">Заявки от учителей</a></li>
+                                                <li><a href="/users/request">Отправить заявку учителю</a></li>
+                                                <li><a href="/">Заявки от учеников</a></li>
+                                                <li><a href="/">Отправить заявку ученику</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                            <div class="Appointment">
+                                <div class="phone_num d-none d-xl-block">
+                                    <a th:if="${session.user == null}" href="/auth">Авторизация</a>
+                                    <a th:if="${session.user != null}" href="/logout">Выход</a>
+                                </div>
+                                <div class="d-none d-lg-block">
+                                    <a th:if="${session.user != null}" class="boxed-btn3" th:href="${'users/' + session.user.getId()}">Профиль</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"><div class="slicknav_menu"><a href="#" aria-haspopup="true" role="button" tabindex="0" class="slicknav_btn slicknav_collapsed" style="outline: none;"><span class="slicknav_menutxt">MENU</span><span class="slicknav_icon"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a><ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
+                                <li><a href="index.html" role="menuitem" tabindex="-1">home</a></li>
+                                <li><a href="jobs.html" role="menuitem" tabindex="-1">Browse Job</a></li>
+                                <li class="slicknav_collapsed slicknav_parent"><a href="#" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item slicknav_row" style="outline: none;"><a href="#" tabindex="-1">pages <i class="ti-angle-down"></i></a>
+                                    <span class="slicknav_arrow">+</span></a><ul class="submenu slicknav_hidden" role="menu" aria-hidden="true" style="display: none;">
+                                    <li><a href="candidate.html" role="menuitem" tabindex="-1">Candidates </a></li>
+                                    <li><a href="job_details.html" role="menuitem" tabindex="-1">job details </a></li>
+                                    <li><a href="elements.html" role="menuitem" tabindex="-1">elements</a></li>
+                                </ul>
+                                </li>
+                                <li class="slicknav_collapsed slicknav_parent"><a href="#" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item slicknav_row" style="outline: none;"><a href="#" tabindex="-1">blog <i class="ti-angle-down"></i></a>
+                                    <span class="slicknav_arrow">+</span></a><ul class="submenu slicknav_hidden" role="menu" aria-hidden="true" style="display: none;">
+                                    <li><a href="blog.html" role="menuitem" tabindex="-1">blog</a></li>
+                                    <li><a href="single-blog.html" role="menuitem" tabindex="-1">single-blog</a></li>
+                                </ul>
+                                </li>
+                                <li><a href="" role="menuitem" tabindex="-1">Помощь </a></li>
+                            </ul></div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl">
+                <div class="bradcam_text">
+                    <h3>TEXT</h3>
+                </div>
+            </div>
+
+            <div class="col-xl">
+                <div class="bradcam_text">
+                    <h3 th:if="${session.user != null}" th:text="${session.user.getLogin()}">Логин</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

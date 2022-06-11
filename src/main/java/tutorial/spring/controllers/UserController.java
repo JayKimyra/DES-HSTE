@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import tutorial.spring.dao.HomeworkDAO;
+import tutorial.spring.dao.SolveDAO;
 import tutorial.spring.dao.TeacherStudentDAO;
 import tutorial.spring.dao.UserDAO;
+import tutorial.spring.models.Solve;
 import tutorial.spring.models.TeacherStudent;
 import tutorial.spring.models.User;
 
@@ -18,17 +21,27 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 public class UserController {
     private final UserDAO userDAO;
+    private final HomeworkDAO homeworkDAO;
+    private final SolveDAO solveDAO;
     private final TeacherStudentDAO teacherStudentDAO;
 
     @Autowired
-    public UserController(UserDAO userDAO, TeacherStudentDAO teacherStudentDAO) {
+    public UserController(UserDAO userDAO, HomeworkDAO homeworkDAO, SolveDAO solveDAO, TeacherStudentDAO teacherStudentDAO) {
         this.userDAO = userDAO;
+        this.homeworkDAO = homeworkDAO;
+        this.solveDAO = solveDAO;
         this.teacherStudentDAO = teacherStudentDAO;
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
-        model.addAttribute("user", userDAO.findOne(id));
+        User user = userDAO.findOne(id);
+        model.addAttribute("user", user);
+        List<Solve> solves = solveDAO.findByField("user", user);
+        long correctCount = solves.stream().filter(x -> x.isCorrect()).count();
+        long incorrectCount = solves.stream().filter(x -> !x.isCorrect()).count();
+        model.addAttribute("correctCount", correctCount);
+        model.addAttribute("incorrectCount", incorrectCount);
         return "users/show";
     }
     @GetMapping("/request")

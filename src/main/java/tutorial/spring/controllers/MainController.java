@@ -98,7 +98,7 @@ public class MainController {
         problems.addAll(problemDAO.findNRandomsByField(2,"type","Математика"));
         problems.addAll(problemDAO.findNRandomsByField(1,"type","Физика"));
         Variant variant = new Variant(problems, user);
-        switch (new Random().nextInt(10)){
+        switch (new Random().nextInt(11)){
             case 0: variant.setImgUrl("https://russianblogs.com/images/669/c6e82c62b1f5bff2edbac3f98c33fae5.gif"); break;
             case 1: variant.setImgUrl("https://snipp.ru/uploads/images/donut.png"); break;
             case 2: variant.setImgUrl("https://99px.ru/sstorage/86/2020/04/image_860904200656497228095.gif"); break;
