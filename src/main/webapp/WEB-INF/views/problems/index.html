@@ -24,14 +24,14 @@
 
                     <div class="blog_details">
                         <a class="d-inline-block" href="">
-                            <h2 th:text="${problem.getType()}"></h2>
+                            <h2 th:text="${problem.getTitle()}"></h2>
                         </a>
                         <p style="text-align:justify;"  th:text="${problem.getText()}">That dominion stars lights dominion divide years for fourth have don't stars is that
                             he earth it first without heaven in place seed it second morning saying.</p>
                         <img th:if="${problem.getImgUrl() != null}" width="150" height="150" th:src="${problem.getImgUrl()}" alt="">
                         <ul class="blog-info-link">
-                            <li><a href="#"><i class="fa fa-user"></i> <label th:text="${problem.getAuthor().getLogin()}"></label> </a></li>
-                            <li><a href="#"><i class="fa-solid fa-bolt"></i> Максимум баллов: <label th:text="${problem.getMaxPoints()}"></label></a></li>
+                            <li><a href="#"><i class="fa fa-user"></i> <span th:text="${problem.getAuthor().getLogin()}"></span> </a></li>
+                            <li><a href="#"><i class="fa-solid fa-bolt"></i> Тип задания: <span th:text="${problem.getType()}"></span></a></li>
                         </ul>
                     </div>
                 </article>

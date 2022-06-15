@@ -44,9 +44,14 @@ public class UserController {
         model.addAttribute("incorrectCount", incorrectCount);
         return "users/show";
     }
-    @GetMapping("/request")
-    public String showRequest(@ModelAttribute("user") User user){
-        return "users/request";
+    @GetMapping("/requestToTeacher")
+    public String showRequestToTeacher(@ModelAttribute("user") User user){
+        return "users/request_to_teacher";
+    }
+
+    @GetMapping("/requestToStudent")
+    public String showRequestToStudent(@ModelAttribute("user") User user){
+        return "users/request_to_student";
     }
 
     @GetMapping("/requests")

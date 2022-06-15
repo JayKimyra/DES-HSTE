@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/style"></div>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="fragments/includes"></div>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="job_details_area">
+            <div class="apply_job_form white-bg">
+                <h4>Создание варианта</h4>
+                <form th:method="POST" th:action="@{/variants}" >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <input type="url" name="imgSource" id="imgSource" placeholder="Ссылка на изображение"/>
+                            </div>
+                        </div>
+                        <table id="table">
+                            <caption></caption>
+                            <tr><td></td></tr>
+                            <tr id="newline">
+                                <td>
+                                    <div class="col-md-12">
+                                        <div class="input_field">
+                                            <input placeholder="Номер задания" type="number" name="count" required min="0">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    <div class="col-md-6">
+                        <div class="submit_btn">
+                            <button onclick="insertRow();" class="boxed-btn3 w-100" type="button">Добавить задание</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="submit_btn">
+                            <button onclick="removeRow();" class="boxed-btn3 w-100" type="button">Удалить задание</button>
+                        </div>
+                    </div>
+                        <div class="col-md-12" style="margin-top: 20px">
+                            <div class="submit_btn">
+                                <button class="boxed-btn3 w-100" type="submit">Создать вариант</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+                    <script>
+                        var numOfRows = 1;
+                        function removeRow(i)
+                        {
+                            if (numOfRows > 1){
+                                document.getElementById('table').deleteRow(numOfRows)
+                                numOfRows--;
+                            }
+                        }
+                        function insertRow()
+                        {
+                            numOfRows++
+                            var row = document.getElementById('table').insertRow(numOfRows)
+                            var column1 = row.insertCell(0)
+                            column1.innerHTML=
+                                "                        <div class=\"col-md-12\">\n" +
+                                "                            <div class=\"input_field\">\n" +
+                                "                                <input placeholder=\"Номер задания\" type=\"number\" name=\"count\" required min=\"0\">\n" +
+                                "                            </div>\n" +
+                                "                        </div>"
+                        }
+                    </script>
+
+</body>
+</html>

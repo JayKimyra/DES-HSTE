@@ -55,10 +55,9 @@
                                         </li>
                                         <li><a href="#">Заявки <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
-                                                <li><a href="/users/requests">Заявки от учителей</a></li>
-                                                <li><a href="/users/request">Отправить заявку учителю</a></li>
-                                                <li><a href="/">Заявки от учеников</a></li>
-                                                <li><a href="/">Отправить заявку ученику</a></li>
+                                                <li><a href="/users/requests">Заявки</a></li>
+                                                <li><a href="/users/requestToTeacher">Отправить заявку учителю</a></li>
+                                                <li><a href="/users/requestToStudent">Отправить заявку ученику</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -69,10 +68,11 @@
                             <div class="Appointment">
                                 <div class="phone_num d-none d-xl-block">
                                     <a th:if="${session.user == null}" href="/auth">Авторизация</a>
+                                    <a th:if="${session.user == null}" href="/registration">Регистрация</a>
                                     <a th:if="${session.user != null}" href="/logout">Выход</a>
                                 </div>
                                 <div class="d-none d-lg-block">
-                                    <a th:if="${session.user != null}" class="boxed-btn3" th:href="${'users/' + session.user.getId()}">Профиль</a>
+                                    <a th:if="${session.user != null}" class="boxed-btn3" th:href="${'/users/' + session.user.getId()}">Профиль</a>
                                 </div>
                             </div>
                         </div>

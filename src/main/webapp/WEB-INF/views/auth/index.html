@@ -12,30 +12,36 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <div class="blog_left_sidebar">
-                <article class="blog_item">
-                    <form action="/auth" method="post">
-                        <div class="container">
-                            <h1>Auth</h1>
-                            <p>Введите данные.</p>
-                            <hr>
-
-                            <label for="login"><b>Login</b></label>
-                            <input type="text" placeholder="Login" name="login" id="login" required>
-
-                            <label for="password"><b>Password</b></label>
-                            <input type="password" placeholder="Password" name="password" id="password" required>
-                            <hr>
-                            <button type="submit" class="registerbtn">Log in</button>
+        <div class="job_details_area">
+            <div class="apply_job_form white-bg">
+                <h4>Вход</h4>
+                <form th:method="POST" action="/auth">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <input placeholder="Логин" type="text" id="login" name="login"/>
+                            </div>
                         </div>
-                    </form>
-                </article>
-
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <input placeholder="Пароль" type="password" id="password" name="password"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="submit_btn">
+                                <button class="boxed-btn3 w-100" type="submit">Войти</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script th:if="${session.loginError != null}">
+    alert("Данный логин уже занят")
+</script>
 
+</div>
 </body>
 </html>

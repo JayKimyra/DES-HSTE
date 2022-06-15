@@ -19,18 +19,22 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="input_field">
+                                <input placeholder="Заголовок" th:field="*{title}" id="title">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input_field">
                                 <textarea cols="30" rows="10" placeholder="Текст задания" th:field="*{text}" id="text"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="input_field">
-                                <textarea cols="30" rows="10" placeholder="Ответ" th:field="*{answer}" id="answer"></textarea>
+                                <textarea cols="30" rows="10" placeholder="Пояснение" th:field="*{solution}" id="solution"></textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="input_field">
-                                <label class="custom-file-label" for="maxPoints">Максимум баллов:</label>
-                                <input type="number" th:field="*{maxPoints}" id="maxPoints"/>
+                                <input placeholder="Ответ" th:field="*{answer}" id="answer">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -39,17 +43,10 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button type="button" id="inputGroupFileAddon03"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <div class="custom-file">
-                                    <input type="text" th:field="*{type}" id="type" placeholder="Тип задания"/>
-                                </div>
+                            <div class="input_field">
+                                <input type="text" th:field="*{type}" id="type" placeholder="Тип задания"/>
                             </div>
                         </div>
-
                         <div class="col-md-12">
                             <div class="submit_btn">
                                 <button class="boxed-btn3 w-100" type="submit">Создать задание</button>
@@ -62,6 +59,6 @@
     </div>
 </div>
 
-</div>
+
 </body>
 </html>

@@ -3,6 +3,7 @@ package tutorial.spring.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -34,7 +35,7 @@ public class User implements Serializable {
     private Set<Problem> problems;
     @Column
     String imgUrl = null;
-    @Column
+    @Column(columnDefinition="text")
     String info;
     @OneToMany(mappedBy = "teacher")
     private Set<TeacherStudent> students = new HashSet<>();

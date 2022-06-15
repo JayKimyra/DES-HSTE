@@ -54,18 +54,17 @@ public class VariantController {
     }
 
     @PostMapping()
-    public String create(Model model, @RequestParam String[] type, @RequestParam Integer[] count, @RequestParam String imgSource, HttpSession session){
+    public String create(@RequestParam Integer[] count, @RequestParam String imgSource, HttpSession session){
         User user = (User) session.getAttribute("user");
         Set<Problem> list = new HashSet<>();
-        for (int i = 0;i < type.length;i++){
-            list.addAll(problemDAO.findNRandomsByField(count[i],"type",type[i]));
-            System.out.println(type[i]+" "+count[i]);
+        for (int i = 0;i < count.length;i++){
+            list.add(problemDAO.findOne(count[i]));
         }
-        list.forEach(System.out::println);
         Variant variant = new Variant();
         variant.setProblems(list);
         variant.setOwner(user);
         if (!imgSource.isEmpty()) variant.setImgUrl(imgSource);
+        else variant.setImgUrl("https://www.creativefabrica.com/wp-content/uploads/2020/02/10/Science-Logo-Graphics-1-14.jpg");
         variantDAO.create(variant);
         return "redirect:/variants";
     }

@@ -1,25 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <div th:replace="fragments/style"></div>
     <meta charset="UTF-8">
-    <title>problems/new</title>
-    <div th:replace="fragments/includes"> This header content is going to be replaced.</div>
+    <title>Title</title>
+    <div th:replace="fragments/includes"></div>
 </head>
 <body>
-<div class="row">
-    <div class="col-2 border">
-        <div th:replace="fragments/header" > This header content is going to be replaced.</div>
+
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="job_details_area">
+            <div class="apply_job_form white-bg">
+                <h4>Регистрация</h4>
+                <form th:method="POST" action="/registration">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_field">
+                                <input placeholder="Логин" type="text" id="login" name="login"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input_field">
+                                <input placeholder="Пароль" type="password" id="password" name="password"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <textarea cols="30" rows="10" placeholder="Информация" id="info" name="info"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <input placeholder="URL картинки" type="url" id="imgUrl" name="imgUrl"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="submit_btn">
+                                <button class="boxed-btn3 w-100" type="submit">Зарегистрироваться</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="col-10 border">
-        <form th:method="POST" th:action="@{/users/addTeacher}">
-            <label for="login">Введите логин учителя: </label>
-            <input type="text" id="login" name="login"/>
-            <br/>
-            <input type="submit" value="Отправить запрос!"/>
-        </form>
-    </div>
-    <br/>
-    <hr/>
+</div>
+<script th:if="${session.loginError != null}">
+    alert("Данный логин уже занят")
+</script>
+
 </div>
 </body>
 </html>

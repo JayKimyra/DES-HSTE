@@ -9,31 +9,54 @@
 <body>
 
 <div th:replace="fragments/header"></div>
+
 <div class="container">
     <div class="row">
-        <div class="col">
-            <div class="blog_left_sidebar">
-                <form th:method="POST" th:action="@{/variants}" th:object="${variant}">
-                    <label for="imgSource">Введите ссылку на изображение</label>
-                    <input type="text" name="imgSource" id="imgSource">
-                    <br/>
-                    <span>
-                <table id="table">
-                <caption>Генератор варианта</caption>
-                <tr><td>Тип</td>
-                    <td>Количество заданий</td><td>
-                        <div><a href="#" onclick="return insertRow();">добавить</a></div>
-                        <div><a href="#" onclick="removeRow();">удалить</a></div>
-                    </td>
-                </tr>
-                <tr id="newline">
-                    <td><input type="text" name="type"></td>
-                    <td><input type="number" name="count"></td>
-                    <td></td>
-                </tr>
-                </table>
-            </span>
-                    <input type="submit" value="Create!"/>
+        <div class="job_details_area">
+            <div class="apply_job_form white-bg">
+                <h4>Создание варианта</h4>
+                <form th:method="POST" th:action="@{/variants}" >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <input type="url" name="imgSource" id="imgSource" placeholder="Ссылка на изображение"/>
+                            </div>
+                        </div>
+                        <table id="table">
+                            <caption></caption>
+                            <tr><td></td></tr>
+                            <tr id="newline">
+                                <td>
+                                    <div class="col-md-12">
+                                        <div class="input_field">
+                                            <input placeholder="Номер задания" type="number" name="count" required min="0">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    <div class="col-md-6">
+                        <div class="submit_btn">
+                            <button onclick="insertRow();" class="boxed-btn3 w-100" type="button">Добавить задание</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="submit_btn">
+                            <button onclick="removeRow();" class="boxed-btn3 w-100" type="button">Удалить задание</button>
+                        </div>
+                    </div>
+                        <div class="col-md-12" style="margin-top: 20px">
+                            <div class="submit_btn">
+                                <button class="boxed-btn3 w-100" type="submit">Создать вариант</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
                     <script>
                         var numOfRows = 1;
                         function removeRow(i)
@@ -48,17 +71,14 @@
                             numOfRows++
                             var row = document.getElementById('table').insertRow(numOfRows)
                             var column1 = row.insertCell(0)
-                            var column2 = row.insertCell(1)
-                            column1.innerHTML="<input type=\"text\" name=\"type\">"
-
-                            column2.innerHTML="<input type=\"number\" name=\"count\">"
+                            column1.innerHTML=
+                                "                        <div class=\"col-md-12\">\n" +
+                                "                            <div class=\"input_field\">\n" +
+                                "                                <input placeholder=\"Номер задания\" type=\"number\" name=\"count\" required min=\"0\">\n" +
+                                "                            </div>\n" +
+                                "                        </div>"
                         }
                     </script>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>

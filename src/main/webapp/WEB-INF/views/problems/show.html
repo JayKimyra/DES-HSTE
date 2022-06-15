@@ -1,32 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <div th:replace="fragments/style"></div>
     <meta charset="UTF-8">
-    <title>problems/show</title>
-    <div th:replace="fragments/includes"> This header content is going to be replaced.</div>
+    <title>Title</title>
+    <div th:replace="fragments/includes"></div>
 </head>
 <body>
-<div class="row">
-    <div class="col-2 border">
-        <div th:replace="fragments/header" > This header content is going to be replaced.</div>
-    </div>
-    <div class="col-10 border">
-        <p th:text="${problem.getText()}"></p>
-        <p th:text="${problem.getAuthor().getLogin()}"></p>
-        <details>
-            <summary>Ответ</summary>
-            <p th:text="${problem.getAnswer()}"></p>
-        </details>
-        <br/>
-        <div th:if="${problem.getAuthor().equals(session.user)}">
-            <a th:href="@{/problems/{id}/edit(id = ${problem.getId()})}">Edit</a>
-            <form th:method="DELETE" th:action="@{/problems/{id}(id = ${problem.getId()})}">
-                <input type="submit" value="Delete">
-            </form>
+
+<div th:replace="fragments/header"></div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="blog_left_sidebar">
+                <article class="blog_item">
+                    <div class="blog_item_img">
+                        <a href="#"class="blog_item_date">
+                            <h3 th:text="${problem.getId()}"></h3>
+                            <p>Задание</p>
+                        </a>
+                    </div>
+
+                    <div class="blog_details">
+                        <a class="d-inline-block" href="">
+                            <h2 th:text="${problem.getTitle()}"></h2>
+                        </a>
+                        <p style="text-align:justify;"  th:text="${problem.getText()}">
+                        </p>
+                        <img th:if="${problem.getImgUrl() != null}" width="150" height="150" th:src="${problem.getImgUrl()}" alt="">
+                        <details>
+                            <summary>Решение</summary>
+                            <p style="text-align:justify;"  th:text="${problem.getSolution()}"></p>
+                            <p style="text-align:justify;"  th:text="${'Ответ: ' + problem.getAnswer()}"></p>
+                        </details>
+
+                        <ul class="blog-info-link">
+                            <li><a href="#"><i class="fa fa-user"></i> <span th:text="${problem.getAuthor().getLogin()}"></span> </a></li>
+                            <li><a href="#"><i class="fa-solid fa-bolt"></i> Тип задания: <span th:text="${problem.getType()}"></span></a></li>
+                        </ul>
+                    </div>
+                    <div th:if="${problem.getAuthor().equals(session.user)}">
+                        <a th:href="@{/problems/{id}/edit(id = ${problem.getId()})}"><button class="boxed-btn3 w-100">Изменить</button></a>
+                        <!--<form th:method="DELETE" th:action="@{/problems/{id}(id = ${problem.getId()})}">
+                            <button class="boxed-btn3 w-100" type="submit" value="delete"></button>
+                        </form>-->
+                    </div>
+                </article>
+
+            </div>
         </div>
     </div>
-    <br/>
-    <hr/>
 </div>
 </body>
 </html>

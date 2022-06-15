@@ -17,8 +17,10 @@ public class Problem implements Serializable {
 
 
 
-    public Problem(String text, String answer, String type, User author, Long maxPoints, String imgUrl) {
+    public Problem(String title,String text,String solution, String answer, String type, User author, Long maxPoints, String imgUrl) {
+        this.title = title;
         this.text = text;
+        this.solution = solution;
         this.answer = answer;
         this.type = type;
         this.author = author;
@@ -29,8 +31,13 @@ public class Problem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "text")
+    private String title;
     @Column(columnDefinition = "text")
     private String text;
+    @Column(columnDefinition = "text")
+    private String solution;
     @Column(columnDefinition = "text")
     private String answer;
     @Column

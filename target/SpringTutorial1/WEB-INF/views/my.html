@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <div th:replace="fragments/includes"> This header content is going to be replaced.</div>
+
+</head>
+
+<body>
+<div class="row">
+  <div class="col-2 border">
+    <div th:replace="fragments/header" > This header content is going to be replaced.</div>
+  </div>
+  <div class="col-10 border">
+    <h1 th:if="${students.size() > 0}">Ученики</h1>
+    <h1 th:if="${students.size() == 0}">Учеников нет</h1>
+    <div th:each="student : ${students}" >
+      <a th:href="@{/users/{id}(id = ${student.getId()})}"><div th:text="${student.getLogin()}"></div></a>
+    </div>
+    <h1 th:if="${teachers.size() > 0}">Учителя</h1>
+    <h1 th:if="${teachers.size() == 0}">Учителей нет</h1>
+    <div th:each="teacher : ${teachers}" >
+      <a th:href="@{/users/{id}(id = ${teacher.getId()})}"><div th:text="${teacher.getLogin()}"></div></a>
+    </div>
+  </div>
+  <br/>
+  <hr/>
+</div>
+</body>
+</html>

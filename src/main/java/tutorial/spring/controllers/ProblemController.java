@@ -60,6 +60,10 @@ public class ProblemController {
             return "redirect:/problems";
         }
         problem.setAuthor(user);
+        problem.setMaxPoints(1L);
+        if (problem.getImgUrl().replace(" ","").isEmpty()){
+            problem.setImgUrl(null);
+        }
         problemDAO.create(problem);
         return "redirect:/problems";
     }

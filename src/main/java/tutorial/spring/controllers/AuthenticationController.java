@@ -6,6 +6,7 @@ import tutorial.spring.dao.UserDAO;
 import tutorial.spring.models.User;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -40,6 +41,32 @@ public class AuthenticationController {
         }
         return "auth/index";
     }
+
+
+    @GetMapping("/registration")
+    public String registration(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            return "redirect:/";
+        }
+        return "users/new";
+    }
+    @PostMapping("/registration")
+    public String registration(@RequestParam String login, @RequestParam String password, @RequestParam String info, @RequestParam String imgUrl, HttpSession session){
+        List<User> users = userDAO.findByField("login",login);
+        if (!users.isEmpty()){
+            System.out.println("Данный логин уже занят");
+            session.setAttribute("loginError", "Данный логин уже занят");
+            return "redirect:/registration";
+        }
+        session.removeAttribute("loginError");
+        User newUser = new User(login,password);
+        newUser.setImgUrl(imgUrl);
+        newUser.setInfo(info);
+        userDAO.create(newUser);
+        return "redirect:/auth";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.removeAttribute("user");
