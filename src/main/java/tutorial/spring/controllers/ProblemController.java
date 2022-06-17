@@ -26,12 +26,15 @@ public class ProblemController {
 
     @GetMapping()
     public String index(Model model){
+
+        model.addAttribute("pageTitle","Задания");
         model.addAttribute("problems", problemDAO.findAllWithLimit(20,0));
 
         return "problems/index";
     }
     @GetMapping("/user/{id}")
     public String problemsUser(Model model, @PathVariable int id){
+        model.addAttribute("pageTitle","Задания");
         List<Problem> problems = problemDAO.findByField("author",userDAO.findOne(id));
         model.addAttribute("problems", problems);
         return "problems/index";
@@ -40,17 +43,19 @@ public class ProblemController {
 
     @GetMapping("/get")
     public String index2(Model model,@RequestParam(defaultValue= "5") int limit, @RequestParam(defaultValue= "0") int offset){
+        model.addAttribute("pageTitle","хы");
         model.addAttribute("problems", problemDAO.findAllWithLimit(limit,offset));
         return "problems/index";
     }
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
+        model.addAttribute("pageTitle","Просмотр задания");
         model.addAttribute("problem", problemDAO.findOne(id));
         return "problems/show";
     }
     @GetMapping("/new")
-    public String newProblem(@ModelAttribute("problem") Problem problem){
-
+    public String newProblem(@ModelAttribute("problem") Problem problem,Model model){
+        model.addAttribute("pageTitle","Создать задание");
         return "problems/new";
     }
     @PostMapping()

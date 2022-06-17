@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/style"></div>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="fragments/includes"></div>
+</head>
+<body>
+
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="job_details_area">
+            <div class="apply_job_form white-bg">
+                <h4>Вход</h4>
+                <form th:method="POST" action="/auth">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <input placeholder="Логин" type="text" id="login" name="login"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input_field">
+                                <input placeholder="Пароль" type="password" id="password" name="password"/>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="submit_btn">
+                                <button class="boxed-btn3 w-100" type="submit">Войти</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:if="${session.loginError != null}">
+    alert("Данный логин уже занят")
+</script>
+
+</div>
+</body>
+</html>

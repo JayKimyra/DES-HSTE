@@ -1,6 +1,7 @@
 package tutorial.spring.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tutorial.spring.dao.UserDAO;
 import tutorial.spring.models.User;
@@ -34,17 +35,21 @@ public class AuthenticationController {
     }
 
     @GetMapping("/auth")
-    public String auth(HttpSession session){
+    public String auth(HttpSession session, Model model){
+        model.addAttribute("pageTitle","Авторизация");
         User user = (User) session.getAttribute("user");
         if (user != null) {
             return "redirect:/";
         }
+
+
         return "auth/index";
     }
 
 
     @GetMapping("/registration")
-    public String registration(HttpSession session){
+    public String registration(HttpSession session, Model model){
+        model.addAttribute("pageTitle","Регистрация");
         User user = (User) session.getAttribute("user");
         if (user != null) {
             return "redirect:/";

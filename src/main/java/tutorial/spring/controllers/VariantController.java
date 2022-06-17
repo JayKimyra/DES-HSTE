@@ -31,23 +31,33 @@ public class VariantController {
 
     @GetMapping()
     public String index(Model model){
+        User user = (User) model.getAttribute("user");
+        model.addAttribute("pageTitle", "Варианты");
         model.addAttribute("variants", variantDAO.findAll());
         return "variants/index";
     }
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
+
         Variant variant = variantDAO.findOne(id);
         model.addAttribute("variant", variant);
+
+
+        model.addAttribute("pageTitle","Вариант №" + variant.getId());
         return "variants/show";
     }
     @GetMapping("/new")
     public String newVariant(@ModelAttribute("variant") Variant variant, Model model){
+
+        model.addAttribute("pageTitle","Новый вариант");
         model.addAttribute("problems", problemDAO.findAll());
         return "variants/new";
     }
 
     @GetMapping("/user/{id}")
     public String variantsUser(Model model, @PathVariable int id){
+
+        model.addAttribute("pageеitle","Варианты");
         List<Variant> variants = variantDAO.findByField("owner",userDAO.findOne(id));
         model.addAttribute("variants", variants);
         return "variants/index";

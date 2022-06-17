@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/homework")
@@ -74,37 +75,75 @@ public class HomeworkController {
         return "redirect:/homework";
     }
 
-    @GetMapping("/new")
-    public String createPage(HttpSession session, Model model){
+    @GetMapping("/new/user/{login}")
+    public String createPage1(HttpSession session, Model model,@PathVariable String login){
+        model.addAttribute("pageTitle","Задать домашнюю работу");
         User user = (User) session.getAttribute("user");
         List<User> students = new ArrayList<>();
         for (TeacherStudent teacherStudent:
         teacherStudentDAO.findByField("teacher",user)) {
             students.add(teacherStudent.getStudent());
         }
+        if (login == null) model.addAttribute("login", "");
+        else model.addAttribute("login", login);
         model.addAttribute("students", students);
         return "homework/new";
     }
+    @GetMapping("/new/variant/{variantId}")
+    public String createPage2(HttpSession session, Model model,@PathVariable String variantId){
+
+        model.addAttribute("pageTitle","Задать домашнюю работу");
+        User user = (User) session.getAttribute("user");
+        List<User> students = new ArrayList<>();
+        for (TeacherStudent teacherStudent:
+                teacherStudentDAO.findByField("teacher",user)) {
+            students.add(teacherStudent.getStudent());
+        }
+        if (variantId == null) model.addAttribute("variantId", "");
+        else model.addAttribute("variantId", variantId);
+        model.addAttribute("students", students);
+        return "homework/new";
+    }
+    @GetMapping("/new")
+    public String createPage(HttpSession session, Model model){
+        model.addAttribute("pageTitle","Задать домашнюю работу");
+        User user = (User) session.getAttribute("user");
+        List<User> students = new ArrayList<>();
+        for (TeacherStudent teacherStudent:
+                teacherStudentDAO.findByField("teacher",user)) {
+            students.add(teacherStudent.getStudent());
+        }
+        model.addAttribute("login", "");
+        model.addAttribute("variantId", "");
+        model.addAttribute("students", students);
+        return "homework/new";
+    }
+
+
+
     @GetMapping()
     public String index(HttpSession session, Model model){
+        model.addAttribute("pageTitle","Домашняя работа");
         User user = (User) session.getAttribute("user");
         if (user == null) return "redirect:/";
 
         List<Homework> homeworkList = homeworkDAO.findByField("student" , user);
 
-        model.addAttribute("homeworkList",homeworkList);
+        model.addAttribute("homeworkList",homeworkList.stream().filter(x -> !x.isArchived()).collect(Collectors.toList()));
         return "homework/index";
     }
     @GetMapping("/archive")
     public String archive(HttpSession session, Model model){
+        model.addAttribute("pageTitle","Архив");
         User user = (User) session.getAttribute("user");
         List<Homework> homeworkList = homeworkDAO.findByField("student" , user);
-        model.addAttribute("homeworkList",homeworkList);
+        model.addAttribute("homeworkList",homeworkList.stream().filter(Homework::isArchived).collect(Collectors.toList()));
         return "homework/archive";
     }
 
     @GetMapping("/archive/{variantId}")
     public String archiveVariant(HttpSession session, Model model, @PathVariable int variantId){
+        model.addAttribute("pageTitle","Решенный вариант");
         User user = (User) session.getAttribute("user");
         Variant variant = variantDAO.findOne(variantId);
         List<Solve> solves = solveDAO.findByFields(new HashMap<String, Object>() {{
@@ -117,6 +156,7 @@ public class HomeworkController {
 
     @GetMapping("/teachers_archive")
     public String teachersArchive(HttpSession session, Model model){
+        model.addAttribute("pageTitle","Архив");
         User user = (User) session.getAttribute("user");
         List<Homework> homeworkList = homeworkDAO.findByField("teacher" , user);
 
