@@ -44,16 +44,19 @@
                                                 <li><a th:if="${session.user != null}" href="/problems/new">Создать задание</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">Домашняя работа <i class="ti-angle-down"></i></a>
+                                        <li th:if="${session.user != null}"><a href="#">Домашняя работа <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
                                                 <li><a href="/homework">Моя домашняя работа</a></li>
-                                                <li><a href="/homework/">Проверить</a></li>
-                                                <li><a href="/homework/archive">Архив</a></li>
-                                                <li><a href="/homework/teachers_archive">Учительский архив</a></li>
-                                                <li><a href="/homework/new">Задать</a></li>
+                                                <li><a href="/homework/archive">Архив выполненных </a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">Заявки <i class="ti-angle-down"></i></a>
+                                        <li th:if="${(session.user != null) && (session.user.getStudents().size() > 0)}"><a href="#">Учителю<i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li><a href="/homework/teachers_archive">Проверить работу</a></li>
+                                                <li><a href="/homework/new">Задать работу</a></li>
+                                            </ul>
+                                        </li>
+                                        <li th:if="${session.user != null}"><a href="#">Заявки <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
                                                 <li><a href="/users/requests">Заявки</a></li>
                                                 <li><a href="/users/requestToTeacher">Отправить заявку учителю</a></li>
@@ -112,8 +115,9 @@
                     <h4 th:text="${pageTitle}">TEXT</h4>
                 </div>
             </div>
-
             <div class="col-xl">
+            </div>
+            <div class="col-xl-2">
                 <div class="bradcam_text">
                     <h4 th:if="${session.user != null}" th:text="${session.user.getLogin()}">Логин</h4>
                 </div>

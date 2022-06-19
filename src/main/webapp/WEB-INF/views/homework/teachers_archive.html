@@ -7,22 +7,46 @@
     <div th:replace="fragments/includes"></div>
 </head>
 <body>
-
 <div th:replace="fragments/header"></div>
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="blog_left_sidebar">
-                <article class="blog_item" th:each="homework : ${homeworkList}" >
-                    <div class="blog_item_img">
-                        <div>Задано:</div>
-                        <div th:text="${homework.getTeacher().getLogin()}"></div>
-                        <div>Ссылка на вариант:</div>
-                        <a th:href="${'/homework/'+homework.getStudent().getLogin() + '/'+homework.getVariant().getId()}" th:text="${homework.getVariant().getId()}"></a>
+<div class="job_listing_area">
+    <div class="container">
+        <div class="job_lists">
+            <div class="row">
+                <div class="col-lg-12 col-md-12" th:if="${homeworkList.isEmpty()}">
+                    <h4>Домашней работы нет</h4>
+                </div>
+                <div class="col-lg-12 col-md-12" th:each="homework : ${homeworkList}" th:if="${homework.isArchived()}">
+                    <div class="single_jobs white-bg d-flex justify-content-between">
+                        <div class="jobs_left d-flex align-items-center">
+                            <div class="thumb">
+                                <img th:if="${homework.getVariant().getImgUrl() != null}" style="max-width: 50px;" th:src="${homework.getVariant().getImgUrl()}">
+                                <img th:if="${homework.getVariant().getImgUrl() == null}" style="max-width: 50px;" src="https://cdn-icons-png.flaticon.com/512/4053/4053204.png">
+                            </div>
+                            <div class="jobs_conetent">
+                                <a th:href="@{/homework/archive/{id}(id=${homework.getVariant().getId()})}"><h4 th:text="${homework.getVariant().getId() + ' Вариант'}"></h4></a>
+                                <div class="links_locat d-flex align-items-center">
+                                    <div class="location">
+                                        <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-user"></i><span th:text="${homework.getVariant().getOwner().getLogin()}"></span></p>
+                                    </div>
+                                    <div class="location">
+                                        <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-calculator"></i><span th:text="${'Заданий: ' + homework.getVariant().getProblems().size()}"></span></p>
+                                    </div>
+                                    <div class="location">
+                                        <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-user"></i><span th:text="${'Задал: ' + homework.getTeacher().getLogin()}"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jobs_right">
+                            <div class="apply_now">
+                                <a th:href="${'/homework/'+homework.getStudent().getLogin() + '/'+homework.getVariant().getId()}" class="boxed-btn3">Проверить</a>
+                            </div>
+                            <div class="date">
+                                <!--<p>Date line: 31 Jan 2020</p>-->
+                            </div>
+                        </div>
                     </div>
-                </article>
-
+                </div>
             </div>
         </div>
     </div>

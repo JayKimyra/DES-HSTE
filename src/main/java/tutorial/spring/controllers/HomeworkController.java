@@ -77,7 +77,7 @@ public class HomeworkController {
 
     @GetMapping("/new/user/{login}")
     public String createPage1(HttpSession session, Model model,@PathVariable String login){
-        model.addAttribute("pageTitle","Задать домашнюю работу");
+        model.addAttribute("pageTitle","Задать работу");
         User user = (User) session.getAttribute("user");
         List<User> students = new ArrayList<>();
         for (TeacherStudent teacherStudent:
@@ -92,7 +92,7 @@ public class HomeworkController {
     @GetMapping("/new/variant/{variantId}")
     public String createPage2(HttpSession session, Model model,@PathVariable String variantId){
 
-        model.addAttribute("pageTitle","Задать домашнюю работу");
+        model.addAttribute("pageTitle","Задать работу");
         User user = (User) session.getAttribute("user");
         List<User> students = new ArrayList<>();
         for (TeacherStudent teacherStudent:
@@ -106,7 +106,7 @@ public class HomeworkController {
     }
     @GetMapping("/new")
     public String createPage(HttpSession session, Model model){
-        model.addAttribute("pageTitle","Задать домашнюю работу");
+        model.addAttribute("pageTitle","Задать работу");
         User user = (User) session.getAttribute("user");
         List<User> students = new ArrayList<>();
         for (TeacherStudent teacherStudent:
@@ -143,7 +143,7 @@ public class HomeworkController {
 
     @GetMapping("/archive/{variantId}")
     public String archiveVariant(HttpSession session, Model model, @PathVariable int variantId){
-        model.addAttribute("pageTitle","Решенный вариант");
+        model.addAttribute("pageTitle","Решенный вариант №" + variantId);
         User user = (User) session.getAttribute("user");
         Variant variant = variantDAO.findOne(variantId);
         List<Solve> solves = solveDAO.findByFields(new HashMap<String, Object>() {{
@@ -156,7 +156,7 @@ public class HomeworkController {
 
     @GetMapping("/teachers_archive")
     public String teachersArchive(HttpSession session, Model model){
-        model.addAttribute("pageTitle","Архив");
+        model.addAttribute("pageTitle","Проверить работу");
         User user = (User) session.getAttribute("user");
         List<Homework> homeworkList = homeworkDAO.findByField("teacher" , user);
 
@@ -182,11 +182,11 @@ public class HomeworkController {
         return "homework/manual_check";
     }
     @PostMapping("/manual_check")
-    public String manualCheck(HttpSession session, Model model,@RequestParam String studentLogin,@RequestParam int variantId,@RequestParam int problemId,@RequestParam boolean isRight){
+    public String manualCheck(HttpSession session, Model model,@RequestParam String studentLogin,@RequestParam int variantId,@RequestParam int problemId,@RequestParam(required = false) String isCorrect){
         User user = (User) session.getAttribute("user");
 
         //todo отказать в доступе если студент и учитель не связаны и если такого варианта задано не было(ничего не должно найтись)
-
+        boolean isRight = isCorrect != null;
         Variant variant = variantDAO.findOne(variantId);
         Problem problem = problemDAO.findOne(problemId);
         User student = userDAO.findByField("login",studentLogin).get(0);

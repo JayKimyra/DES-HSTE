@@ -15,30 +15,37 @@
         <div class="col">
             <div class="blog_left_sidebar">
                 <article class="blog_item">
-                    <div class="row">
-                        <div class="col-2">
-                            <img style="max-height: 150px;max-width: 150px;" th:if="${user.getImgUrl() != null}" th:src="${user.getImgUrl()}">
-                            <img style="max-height: 150px;max-width: 150px;" th:if="${user.getImgUrl() == null}" src="https://i.postimg.cc/tJ5hwyf5/learn-about-bg.png">
+                    <div class="blog_details">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="single_candidates text-center">
+                                    <div class="thumb">
+                                        <img style="max-height: 150px;max-width: 150px;" th:if="${user.getImgUrl() != null}" th:src="${user.getImgUrl()}">
+                                        <img style="max-height: 150px;max-width: 150px;" th:if="${user.getImgUrl() == null}" src="https://i.postimg.cc/tJ5hwyf5/learn-about-bg.png">
+                                    </div>
+                                    <h4 th:text="${user.getLogin()}"></h4>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="single_candidates text-center">
+                                    <h4>Статистика</h4>
+                                    <div th:if="${(correctCount+incorrectCount) > 0}" class="pie animate" th:style="${'--p:' + (100*correctCount/(correctCount+incorrectCount)) + ';--c:darkblue;--b:10px'}" th:text="${(100*correctCount/(correctCount+incorrectCount)) + '%'}"></div>
+                                    <div th:if="${(correctCount+incorrectCount) <= 0}" class="pie animate" style="--p:0; --c:darkblue;--b:10px">0%</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="single_candidates text-center">
+                                    <h4>О себе</h4>
+                                    <p style="text-align:justify;" th:text="${user.getInfo()}"></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-10">
-                            <div>Логин: </div>
-                            <div th:text="${user.getLogin()}"></div>
-                        </div>
-                        <div class="col-2">
-                            <div>Статистика</div>
-                            <div th:if="${(correctCount+incorrectCount) > 0}" class="pie animate" th:style="${'--p:' + (100*correctCount/(correctCount+incorrectCount)) + ';--c:darkblue;--b:10px'}" th:text="${(100*correctCount/(correctCount+incorrectCount)) + '%'}"></div>
-                            <div th:if="${(correctCount+incorrectCount) <= 0}">Статистика отсутствует</div>
-                        </div>
-                        <div class="col-10">
-                            <div>О себе: </div>
-                            <div th:text="${user.getInfo()}"></div>
-                        </div>
-                        </div>
+                    </div>
                 </article>
+
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

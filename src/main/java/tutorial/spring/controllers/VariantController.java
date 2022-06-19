@@ -57,7 +57,7 @@ public class VariantController {
     @GetMapping("/user/{id}")
     public String variantsUser(Model model, @PathVariable int id){
 
-        model.addAttribute("pageеitle","Варианты");
+        model.addAttribute("pageTitle","Варианты");
         List<Variant> variants = variantDAO.findByField("owner",userDAO.findOne(id));
         model.addAttribute("variants", variants);
         return "variants/index";

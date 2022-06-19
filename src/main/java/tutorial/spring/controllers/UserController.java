@@ -42,20 +42,25 @@ public class UserController {
         long incorrectCount = solves.stream().filter(x -> !x.isCorrect()).count();
         model.addAttribute("correctCount", correctCount);
         model.addAttribute("incorrectCount", incorrectCount);
+
+        model.addAttribute("pageTitle","Пользователь: " + user.getLogin());
         return "users/show";
     }
     @GetMapping("/requestToTeacher")
-    public String showRequestToTeacher(@ModelAttribute("user") User user){
+    public String showRequestToTeacher(@ModelAttribute("user") User user, Model model){
+        model.addAttribute("pageTitle","Заявка учителю");
         return "users/request_to_teacher";
     }
 
     @GetMapping("/requestToStudent")
-    public String showRequestToStudent(@ModelAttribute("user") User user){
+    public String showRequestToStudent(@ModelAttribute("user") User user, Model model){
+        model.addAttribute("pageTitle","Заявка ученику");
         return "users/request_to_student";
     }
 
     @GetMapping("/requests")
     public String getRequests(HttpSession session, Model model){
+        model.addAttribute("pageTitle","Заявки");
         User user = (User) session.getAttribute("user");
         List<User> students = teacherStudentDAO.findByFields(new HashMap<String, Object>() {{
             put("teacher", user);
@@ -83,13 +88,13 @@ public class UserController {
         }});
         if (!teacherStudents.isEmpty()){
             System.out.println("Запрос уже существует");
-            return "redirect:/my";
+            return "redirect:/";
         }
 
 
         TeacherStudent teacherStudent = new TeacherStudent(teacher, user,false, user);
         teacherStudentDAO.create(teacherStudent);
-        return "redirect:/my";
+        return "redirect:/";
     }
     @PostMapping("/addStudent")
     public String requestStudent(@RequestParam String login,HttpSession session){
@@ -102,11 +107,11 @@ public class UserController {
         }});
         if (!teacherStudents.isEmpty()){
             System.out.println("Запрос уже существует");
-            return "redirect:/my";
+            return "redirect:/";
         }
         TeacherStudent teacherStudent = new TeacherStudent(user, student,false, user);
         teacherStudentDAO.create(teacherStudent);
-        return "redirect:/my";
+        return "redirect:/";
     }
 
 

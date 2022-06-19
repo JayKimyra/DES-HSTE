@@ -133,8 +133,12 @@ public class MainController {
         User user1 = new User("JayKimyra","123");
         User user2 = new User("GENBY_8","123");
         User user3 = new User("ED","123");
-
-
+        user3.setInfo("В ближайшее время планирую подготовиться к экзаменам для поступления в университет и заняться личным саморазвитием для успешного карьерного роста.\n" +
+                "Планирую сдавать математику, русский, информатику и физику, поэтому ищу репетиторов по всем данным предметам.\n"+
+                "Я очень ответственный: никогда не пропускаю уроки и всегда делаю домашнее задание.\n");
+        user1.setImgUrl("https://hotpotmedia.s3.us-east-2.amazonaws.com/8-XWUIYcwHzPGeCtl.png");
+        user2.setImgUrl("https://img.freepik.com/free-vector/cartoon-rat-holding-cheese_14588-416.jpg?w=2000");
+        user3.setImgUrl("https://thumbs.dreamstime.com/b/vector-pixel-art-pig-pet-vector-pixel-art-pig-pet-isolated-cartoon-138802178.jpg");
         userDAO.create(user1);
         userDAO.create(user2);
         userDAO.create(user3);

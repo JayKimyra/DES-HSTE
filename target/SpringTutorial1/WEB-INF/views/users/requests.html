@@ -13,74 +13,81 @@
     <div class="container">
         <div class="job_lists">
             <div class="row">
-                <h2 class="col-lg-6 col-md-6" th:if="${students.size() == 0}">Запросов от учеников нет</h2>
-                <h2 class="col-lg-6 col-md-6" th:if="${students.size() != 0}">Запросы от учеников</h2>
-                <h2 class="col-lg-6 col-md-6" th:if="${teachers.size() == 0}">Запросов от учителей нет</h2>
-                <h2 class="col-lg-6 col-md-6" th:if="${teachers.size() != 0}">Запросы от учителей</h2>
-                <div class="col-lg-6 col-md-6" th:each="student : ${students}">
-                    <div class="single_jobs white-bg d-flex justify-content-between">
-                        <div class="jobs_left d-flex align-items-center">
-                            <div class="thumb">
-                                <img th:if="${student.getImgUrl() != null}" style="max-width: 50px;" th:src="${student.getImgUrl()}">
-                                <img th:if="${student.getImgUrl() == null}" style="max-width: 50px;" src="https://cdn-icons-png.flaticon.com/512/4053/4053204.png">
-                            </div>
-                            <div class="jobs_conetent">
-                                <a><h4 th:text="${'Запрос от ученика: ' + student.getLogin()}"></h4></a>
-                                <div class="links_locat d-flex align-items-center">
-                                    <div class="location">
-                                        <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-user"></i><span th:text="${'Учителей: ' + student.getTeachers().size()}"></span></p>
-                                    </div>
-                                    <div class="location">
-                                        <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-calculator"></i><span th:text="${'Учеников: ' + student.getStudents().size()}"></span></p>
+                <div class="col-6">
+                    <h2 th:if="${students.size() == 0}">Запросов от учеников нет</h2>
+                    <h2 th:if="${students.size() != 0}">Запросы от учеников</h2>
+                    <div th:each="student : ${students}">
+                        <div class="single_jobs white-bg d-flex justify-content-between">
+                            <div class="jobs_left d-flex align-items-center">
+                                <div class="thumb">
+                                    <img th:if="${student.getImgUrl() != null}" style="max-width: 50px;" th:src="${student.getImgUrl()}">
+                                    <img th:if="${student.getImgUrl() == null}" style="max-width: 50px;" src="https://cdn-icons-png.flaticon.com/512/4053/4053204.png">
+                                </div>
+                                <div class="jobs_conetent">
+                                    <a><h4 th:text="${'Запрос от ученика: ' + student.getLogin()}"></h4></a>
+                                    <div class="links_locat d-flex align-items-center">
+                                        <div class="location">
+                                            <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-user"></i><span th:text="${'Учителей: ' + student.getTeachers().size()}"></span></p>
+                                        </div>
+                                        <div class="location">
+                                            <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-calculator"></i><span th:text="${'Учеников: ' + student.getStudents().size()}"></span></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="jobs_right">
-                            <div class="apply_now">
-                                <form method="post" th:action="@{/users/acceptStudent/{id}(id = ${student.getId()})}">
-                                    <button class="boxed-btn3" type="submit">Добавить</button>
-                                </form >
+                            <div class="jobs_right">
+                                <div class="apply_now">
+                                    <form method="post" th:action="@{/users/acceptStudent/{id}(id = ${student.getId()})}">
+                                        <button class="boxed-btn3" type="submit">Добавить</button>
+                                    </form >
 
-                            </div>
-                            <div class="date">
-                                <!--<p>Date line: 31 Jan 2020</p>-->
+                                </div>
+                                <div class="date">
+                                    <!--<p>Date line: 31 Jan 2020</p>-->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6" th:each="teacher : ${teachers}">
-                    <div class="single_jobs white-bg d-flex justify-content-between">
-                        <div class="jobs_left d-flex align-items-center">
-                            <div class="thumb">
-                                <img th:if="${teacher.getImgUrl() != null}" style="max-width: 50px;" th:src="${teacher.getImgUrl()}">
-                                <img th:if="${teacher.getImgUrl() == null}" style="max-width: 50px;" src="https://cdn-icons-png.flaticon.com/512/4053/4053204.png">
-                            </div>
-                            <div class="jobs_conetent">
-                                <a><h4 th:text="${'Запрос от учителя: ' + teacher.getLogin()}"></h4></a>
-                                <div class="links_locat d-flex align-items-center">
-                                    <div class="location">
-                                        <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-user"></i><span th:text="${'Учителей: ' + teacher.getTeachers().size()}"></span></p>
-                                    </div>
-                                    <div class="location">
-                                        <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-calculator"></i><span th:text="${'Учеников: ' + teacher.getStudents().size()}"></span></p>
+                <div class="col-6">
+                    <h2 th:if="${teachers.size() == 0}">Запросов от учителей нет</h2>
+                    <h2 th:if="${teachers.size() != 0}">Запросы от учителей</h2>
+                    <div th:each="teacher : ${teachers}">
+                        <div class="single_jobs white-bg d-flex justify-content-between">
+                            <div class="jobs_left d-flex align-items-center">
+                                <div class="thumb">
+                                    <img th:if="${teacher.getImgUrl() != null}" style="max-width: 50px;" th:src="${teacher.getImgUrl()}">
+                                    <img th:if="${teacher.getImgUrl() == null}" style="max-width: 50px;" src="https://cdn-icons-png.flaticon.com/512/4053/4053204.png">
+                                </div>
+                                <div class="jobs_conetent">
+                                    <a><h4 th:text="${'Запрос от учителя: ' + teacher.getLogin()}"></h4></a>
+                                    <div class="links_locat d-flex align-items-center">
+                                        <div class="location">
+                                            <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-user"></i><span th:text="${'Учителей: ' + teacher.getTeachers().size()}"></span></p>
+                                        </div>
+                                        <div class="location">
+                                            <p><i style="display: inline-block;margin-bottom: -3px;margin-right: 4px;" class="gg-calculator"></i><span th:text="${'Учеников: ' + teacher.getStudents().size()}"></span></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="jobs_right">
-                            <div class="apply_now">
-                                <form method="post" th:action="@{/users/acceptTeacher/{id}(id = ${teacher.getId()})}">
-                                    <button class="boxed-btn3" type="submit">Добавить</button>
-                                </form >
+                            <div class="jobs_right">
+                                <div class="apply_now">
+                                    <form method="post" th:action="@{/users/acceptTeacher/{id}(id = ${teacher.getId()})}">
+                                        <button class="boxed-btn3" type="submit">Добавить</button>
+                                    </form >
 
-                            </div>
-                            <div class="date">
-                                <!--<p>Date line: 31 Jan 2020</p>-->
+                                </div>
+                                <div class="date">
+                                    <!--<p>Date line: 31 Jan 2020</p>-->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>

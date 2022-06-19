@@ -1,36 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <div th:replace="fragments/style"></div>
     <meta charset="UTF-8">
-    <title>problems/show</title>
-    <div th:replace="fragments/includes"> This header content is going to be replaced.</div>
-</head><body>
-<div class="row">
-    <div class="col-2 border">
-        <div th:replace="fragments/header" > This header content is going to be replaced.</div>
-    </div>
-    <div class="col-10 border">
-        <div th:each="solve : ${solves}">
-            <div th:text="${solve.getProblem().getId()}"></div>
-            <a th:href="@{/problems/{id}(id=${solve.getProblem().getId()})}" th:text="${solve.getProblem().getText()}"></a>
-            <div></div>
-            <div th:text="'Правильный ответ: ' + ${solve.getProblem().getAnswer()}"></div>
-            <div th:if="${solve.isCorrect()}" class="bg-success" th:text="'Ответ пользователя: ' + ${solve.getAnswer()}"></div>
-            <div th:if="${!solve.isCorrect()}" class="bg-danger" th:text="'Ваш пользователя: ' + ${solve.getAnswer()}"></div>
-            <form action="/homework/manual_check" method="post">
-                <input type="hidden" th:value="${solve.getUser().getLogin()}" name="studentLogin">
-                <input type="hidden" th:value="${solve.getVariant().getId()}" name="variantId">
-                <input type="hidden" th:value="${solve.getProblem().getId()}" name="problemId">
-                <input type="radio" value="yes" name="isRight" id="yes"><label for="yes">yes</label>
-                <input type="radio" value="no" name="isRight" id="no"><label for="no">no</label>
-                <button type="submit">Сохранить</button>
-            </form>
+    <title>Title</title>
+    <div th:replace="fragments/includes"></div>
+</head>
+<body>
 
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+    <div class="row">
+        <article class="blog_item" th:each="solve : ${solves}">
+
+            <div class="blog_item_img">
+                <a th:href="@{/problems/{id}(id=${solve.getProblem().getId()})}" class="blog_item_date">
+                    <h3 th:text="${solve.getProblem().getId()}"></h3>
+                    <p>Задание</p>
+                </a>
+            </div>
+
+            <div class="blog_details">
+                <a class="d-inline-block" href="">
+                    <h2 th:text="${solve.getProblem().getTitle()}"></h2>
+                </a>
+                <p style="text-align:justify;"  th:text="${solve.getProblem().getText()}"></p>
+                <img th:if="${solve.getProblem().getImgUrl() != null}" width="150" height="150" th:src="${solve.getProblem().getImgUrl()}" alt="">
+
+                <details>
+                    <summary>Решение</summary>
+                    <p style="text-align:justify;"  th:text="${solve.getProblem().getSolution()}"></p>
+                    <p style="text-align:justify;"  th:text="${'Ответ: ' + solve.getProblem().getAnswer()}"></p>
+                </details>
+                <p style="text-align:justify;">
+                <div th:if="${solve.isCorrect()}" class="alert alert-success"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                    <span th:text="'Ваш ответ: ' + ${solve.getAnswer()}"></span></div>
+                <div th:if="${!solve.isCorrect()}" class="alert alert-danger"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/>
+                    <span th:text="'Ваш ответ: ' + ${solve.getAnswer()}"></span></div>
+                </p>
+                <ul class="blog-info-link">
+                    <li><a href="#"><i class="fa fa-user"></i> <span th:text="${solve.getProblem().getAuthor().getLogin()}"></span> </a></li>
+                    <li><a href="#"><i class="fa-solid fa-bolt"></i> Тип задания: <span th:text="${solve.getProblem().getType()}"></span></a></li>
+                </ul>
+                <form action="/homework/manual_check" method="post">
+                    <input type="hidden" th:value="${solve.getUser().getLogin()}" name="studentLogin">
+                    <input type="hidden" th:value="${solve.getVariant().getId()}" name="variantId">
+                    <input type="hidden" th:value="${solve.getProblem().getId()}" name="problemId">
+                    <div class="switch-wrap d-flex justify-content-between">
+                        <p>Правильно?</p>
+                        <div class="primary-switch">
+                            <input th:if="${solve.isCorrect()}" type="checkbox" th:id="${'isCorrect'+solve.getId()}" name="isCorrect" checked>
+                            <input th:if="${!solve.isCorrect()}" type="checkbox" th:id="${'isCorrect'+solve.getId()}" name="isCorrect">
+                            <label th:for="${'isCorrect'+solve.getId()}"></label>
+                        </div>
+                    </div>
+                    <button class="boxed-btn3 w-100" type="submit">Сохранить</button>
+                </form>
+            </div>
             <br/>
-        </div>
+        </article>
     </div>
-    <br/>
-    <hr/>
 </div>
+
+
 </body>
 </html>
