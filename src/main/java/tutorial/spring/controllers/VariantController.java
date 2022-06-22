@@ -146,7 +146,7 @@ public class VariantController {
     boolean equalAnswers(String a, String b){
         if (a.equals(b)) return true;
         String newA = a.replace('.',',').trim();
-        String newB = a.replace('.',',').trim();
+        String newB = b.replace('.',',').trim();
         if (newA.toLowerCase(Locale.ROOT).equals(newB.toLowerCase(Locale.ROOT))) return true;
 
         return false;
