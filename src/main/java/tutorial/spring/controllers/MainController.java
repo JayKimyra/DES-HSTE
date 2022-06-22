@@ -35,7 +35,7 @@ public class MainController {
     }
     @GetMapping()
     public String auth(){
-        return "redirect:/init";
+        return "redirect:/variants";
     }
 
     @GetMapping("/init")
