@@ -107,7 +107,7 @@ public class VariantController {
         List<Solve> solves = new ArrayList<>();
         for(Problem problem : problems){
             String answer = allParams.get(problem.getId().toString());
-            boolean isCorrect = answer.toLowerCase(Locale.ROOT).equals(problem.getAnswer().toLowerCase(Locale.ROOT));
+            boolean isCorrect = equalAnswers(problem.getAnswer(), answer);
 
             Solve solve = new Solve(user, variant, problem, answer,isCorrect, isCorrect? problem.getMaxPoints() : 0);
             solves.add(solve);
@@ -143,6 +143,13 @@ public class VariantController {
         model.addAttribute("solves", solves);
         return "/variants/check";
     }
+    boolean equalAnswers(String a, String b){
+        if (a.equals(b)) return true;
+        String newA = a.replace('.',',').trim();
+        String newB = a.replace('.',',').trim();
+        if (newA.toLowerCase(Locale.ROOT).equals(newB.toLowerCase(Locale.ROOT))) return true;
 
+        return false;
+    }
 
 }
