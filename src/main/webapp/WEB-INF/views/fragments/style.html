@@ -8068,14 +8068,14 @@
         var canvas = document.getElementById(canvasId),
             context = canvas.getContext("2d"),
             w = canvas.width,
-            h=canvas.height;
+            h =canvas.height;
 
         var mouse = { x:0, y:0};
         var draw = false;
 
         canvas.addEventListener("mousedown", function(e){
-            mouse.x = e.pageX - this.offsetLeft;
-            mouse.y = e.pageY - this.offsetTop;
+            mouse.x = e.pageX - getOffsetLeft(this);
+            mouse.y = e.pageY - getOffsetTop(this);
             draw = true;
             context.beginPath();
             context.moveTo(mouse.x, mouse.y);
@@ -8084,20 +8084,48 @@
 
             if(draw==true){
 
-                mouse.x = e.pageX - this.offsetLeft;
-                mouse.y = e.pageY - this.offsetTop;
+                mouse.x = e.pageX - getOffsetLeft(this);
+                mouse.y = e.pageY - getOffsetTop(this);
                 context.lineTo(mouse.x, mouse.y);
                 context.stroke();
             }
         });
         canvas.addEventListener("mouseup", function(e){
 
-            mouse.x = e.pageX - this.offsetLeft;
-            mouse.y = e.pageY - this.offsetTop;
+            mouse.x = e.pageX - getOffsetLeft(this);
+            mouse.y = e.pageY - getOffsetTop(this);
             context.lineTo(mouse.x, mouse.y);
             context.stroke();
             context.closePath();
             draw = false;
         });
     }
+
+    function getOffsetLeft( elem )
+    {
+        var offsetLeft = 0;
+        do {
+            if ( !isNaN( elem.offsetLeft ) )
+            {
+                offsetLeft += elem.offsetLeft;
+            }
+        } while( elem = elem.offsetParent );
+        return offsetLeft;
+    }
+    function getOffsetTop( elem )
+    {
+        var offsetTop = 0;
+        do {
+            if ( !isNaN( elem.offsetLeft ) )
+            {
+                offsetTop += elem.offsetTop;
+            }
+        } while( elem = elem.offsetParent );
+        return offsetTop;
+    }
+    function setWidth(elementId, width) {
+        var canvas = document.getElementById(elementId);
+        canvas.width = width;
+    }
+
 </script>

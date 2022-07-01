@@ -22,12 +22,12 @@ public class HibernateUtil {
                 // Hibernate settings equivalent to hibernate.cfg.xml's properties
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "org.postgresql.Driver");
-               /* settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/db_test");
+                settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/db_test");
                 settings.put(Environment.USER, "postgres");
-                settings.put(Environment.PASS, "JKimyra619");*/
-                settings.put(Environment.URL, "jdbc:postgresql://ec2-63-32-248-14.eu-west-1.compute.amazonaws.com:5432/d3jq6h5v43gc31");
+                settings.put(Environment.PASS, "JKimyra619");
+                /*settings.put(Environment.URL, "jdbc:postgresql://ec2-63-32-248-14.eu-west-1.compute.amazonaws.com:5432/d3jq6h5v43gc31");
                 settings.put(Environment.USER, "dhxjeiwrpxqbns");
-                settings.put(Environment.PASS, "9accd8f0588e7620dd49f96fa0a6356e6beba24d00f2894ec57df4637b779188");
+                settings.put(Environment.PASS, "9accd8f0588e7620dd49f96fa0a6356e6beba24d00f2894ec57df4637b779188");*/
 
 
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");

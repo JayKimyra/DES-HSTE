@@ -43,15 +43,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="border border-primary">
-                                    <canvas th:id="${'myCanvas' + iter.index}" width="350" height="250" style="background-color:#eee; border: 1px solid #ccc; margin:10px;">
-                                        Ваш браузер не поддерживает Canvas
-                                    </canvas>
-                                    <button th:onclick="'remove(\'myCanvas' + ${iter.index} + '\');'" type="button">Очистить</button>
-                                    <button th:onclick="'addCanvasListener(\'myCanvas' + ${iter.index} + '\');'" type="button">Рисовать</button>
-
-
-                                </div>-->
+                                <div class="border border-primary" th:if="${problem.isDrawable()}">
+                                    <div>
+                                        <canvas th:id="${'myCanvas' + iter.index}" width="350" height="250" style="background-color:#eee; border: 1px solid #ccc; margin:10px;">
+                                            Ваш браузер не поддерживает Canvas
+                                        </canvas>
+                                    </div>
+                                    <div>
+                                        <button th:onclick="'remove(\'myCanvas' + ${iter.index} + '\');'" type="button">Очистить</button>
+                                        <button th:onclick="'addCanvasListener(\'myCanvas' + ${iter.index} + '\');'" type="button">Рисовать</button>
+                                        <input th:id="${'myCanvasInput' + iter.index}" th:oninput="'setWidth(\'myCanvas' + ${iter.index} + '\',this.value);'"
+                                               th:onchange="'setWidth(\'myCanvas' + ${iter.index} + '\',this.value);'" type="range" name="cowbell"
+                                               min="250" max="1000" value="350" step="10">
+                                    </div>
+                                </div>
                             </div>
                         </article>
                         <div class="col-md-12">
@@ -66,6 +71,8 @@
         </div>
     </div>
 </div>
+<script>
 
+</script>
 </body>
 </html>

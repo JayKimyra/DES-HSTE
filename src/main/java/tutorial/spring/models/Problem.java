@@ -47,7 +47,9 @@ public class Problem implements Serializable {
     @Column(nullable = false)
     private Long maxPoints = 1L;
     @Column
-    String imgUrl = null;
+    private String imgUrl = null;
+    @Column
+    private boolean isDrawable = false;
 
     @Override
     public String toString() {
