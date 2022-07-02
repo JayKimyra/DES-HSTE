@@ -1,13 +1,16 @@
 package tutorial.spring.controllers;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import tools.CloudinaryUtil;
 import tutorial.spring.dao.*;
 import tutorial.spring.models.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -99,17 +102,30 @@ public class VariantController {
     }
 
     @PostMapping("/check")
-    public String checkForm(@RequestParam Map<String,String> allParams, Model model,HttpSession session) {
+    public String checkForm(@RequestParam Map<Long,String> allParams,@RequestParam Map<Long,String[]> canvasMap,@RequestParam Long variantId, Model model,HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        Variant variant = variantDAO.findOne(Long.parseLong(allParams.get("variant_id")));
+        Variant variant = variantDAO.findOne(variantId);
         List<Problem> problems = variant.getProblems().stream().sorted((o1, o2) -> (int) (o1.getId()-o2.getId())).collect(Collectors.toList());
         List<Solve> solves = new ArrayList<>();
+        System.out.println(allParams);
+        System.out.println(variantId);
         for(Problem problem : problems){
-            String answer = allParams.get(problem.getId().toString());
+            String answer = allParams.get("answers[" + problem.getId() + "]");
             boolean isCorrect = equalAnswers(problem.getAnswer(), answer);
+            String imgUrl = null;
+            String canvasMapEl = allParams.get("canvasMap[" + problem.getId() + "]");
+            if (canvasMapEl!= null){
+                try{
+                    imgUrl = (String) CloudinaryUtil.getCloudinary().uploader().upload(canvasMapEl, ObjectUtils.emptyMap()).get("secure_url");
+                } catch (IOException e) {
+                    System.out.println("Ошибка загрузки изображения");
+                }
+            }
+
 
             Solve solve = new Solve(user, variant, problem, answer,isCorrect, isCorrect? problem.getMaxPoints() : 0);
+            solve.setImgUrl(imgUrl);
             solves.add(solve);
             if (user != null){
                 List<Solve> solvesFromDb = solveDAO.findByFields(new HashMap<String, Object>() {{
@@ -140,6 +156,7 @@ public class VariantController {
                 System.out.println("Данный вариант был домашней работой! Сохранен результат для домашней работы");
             }
         }
+        System.out.println(solves);
         model.addAttribute("solves", solves);
         return "/variants/check";
     }

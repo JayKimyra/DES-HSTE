@@ -1,9 +1,11 @@
 package tutorial.spring.controllers;
 
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import tools.CloudinaryUtil;
 import tutorial.spring.dao.ProblemDAO;
 import tutorial.spring.dao.TeacherStudentDAO;
 import tutorial.spring.dao.UserDAO;
@@ -14,6 +16,7 @@ import tutorial.spring.models.User;
 import tutorial.spring.models.Variant;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,12 +38,23 @@ public class MainController {
     }
     @GetMapping()
     public String auth(){
-        return "redirect:/variants";
+        return "index";
     }
 
     @GetMapping("/init")
     public String index(Model model){
         dbInit();
+        return "redirect:/variants";
+    }
+
+    @PostMapping("/test")
+    public String test(String variantId, Map p) throws IOException {
+        System.out.println(variantId);
+        System.out.println(p);
+        /*System.out.println(Arrays.deepToString(imgBase64));
+        Map res = CloudinaryUtil.getCloudinary().uploader().upload(imgBase64, ObjectUtils.emptyMap());
+        String secure_url = (String) res.get("secure_url");*/
+        //System.out.println(res);
         return "redirect:/variants";
     }
 

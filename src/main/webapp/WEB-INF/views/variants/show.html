@@ -14,10 +14,10 @@
     <div class="row">
         <div class="col">
             <div class="blog_left_sidebar">
-                <form th:method="POST" action="/variants/check">
+                <form th:method="POST" action="/variants/check" id="main-form" name="main-form">
                     <div class="row">
+                        <input type="hidden" name="variant_id" id="variant_id" th:value="${variant.getId()}">
                         <article class="blog_item" th:each="problem,iter: ${variant.getProblems()}">
-                            <input type="hidden" name="variant_id" th:value="${variant.getId()}">
                             <div class="blog_item_img">
                                 <a th:href="@{/problems/{id}(id=${problem.getId()})}"class="blog_item_date">
                                     <h3 th:text="${problem.getId()}"></h3>
@@ -44,16 +44,16 @@
                                     </div>
                                 </div>
                                 <div class="border border-primary" th:if="${problem.isDrawable()}">
-                                    <div>
-                                        <canvas th:id="${'myCanvas' + iter.index}" width="350" height="250" style="background-color:#eee; border: 1px solid #ccc; margin:10px;">
+                                    <div class="draw">
+                                        <canvas  th:id="${'myCanvas' + problem.getId()}" width="350" height="250" style="background-color:#eee; border: 1px solid #ccc; margin:10px;">
                                             Ваш браузер не поддерживает Canvas
                                         </canvas>
                                     </div>
                                     <div>
-                                        <button th:onclick="'remove(\'myCanvas' + ${iter.index} + '\');'" type="button">Очистить</button>
-                                        <button th:onclick="'addCanvasListener(\'myCanvas' + ${iter.index} + '\');'" type="button">Рисовать</button>
-                                        <input th:id="${'myCanvasInput' + iter.index}" th:oninput="'setWidth(\'myCanvas' + ${iter.index} + '\',this.value);'"
-                                               th:onchange="'setWidth(\'myCanvas' + ${iter.index} + '\',this.value);'" type="range" name="cowbell"
+                                        <button class="genric-btn danger" th:onclick="'remove(\'myCanvas' + ${problem.getId()} + '\');'" type="button">Очистить</button>
+                                        <button class="genric-btn info" th:onclick="'addCanvasListener(\'myCanvas' + ${problem.getId()} + '\');'" type="button">Рисовать</button>
+                                        <input th:id="${'myCanvasInput' + problem.getId()}" th:oninput="'setWidth(\'myCanvas' + ${problem.getId()} + '\',this.value);'"
+                                               th:onchange="'setWidth(\'myCanvas' + ${problem.getId()} + '\',this.value);'" type="range" name="cowbell"
                                                min="250" max="1000" value="350" step="10">
                                     </div>
 
@@ -62,7 +62,7 @@
                         </article>
                         <div class="col-md-12">
                             <div class="submit_btn">
-                                <button class="boxed-btn3 w-100" type="submit">Проверить</button>
+                                <button class="boxed-btn3 w-100" type="button" onclick="send()">Проверить</button>
                             </div>
                         </div>
                     </div>
@@ -73,6 +73,41 @@
     </div>
 </div>
 <script>
+    function send(){
+        var variantId = document.getElementById("variant_id").value
+
+        console.log(variantId)
+        var param = {};
+        var canvasMap = {};
+        var inputs = document.forms["main-form"].querySelectorAll("div.input_field input");
+        var canvases = document.forms["main-form"].querySelectorAll("div.draw canvas");
+        console.log(inputs)
+        for (let i = 0; i < inputs.length; i++) {
+            param[inputs[i].id] = inputs[i].value
+            console.log(inputs[i].id, param[inputs[i].id])
+        }
+        for (let i = 0; i < canvases.length; i++) {
+            canvasMap[canvases[i].id.split('myCanvas')[1]] = canvases[i].toDataURL()
+            console.log(canvases[i].id.split('myCanvas')[1], canvasMap[canvases[i].id])
+        }
+
+        console.log(param)
+        console.log(canvasMap)
+        //var dataURL = Array.prototype.map.call(elements, (x) => x.toDataURL())
+        $.ajax({
+            type: "POST",
+            url: "/variants/check",
+            data: {
+                variantId: variantId,
+                answers: param,
+                canvasMap: canvasMap
+            }
+        }).done(function(o) {
+            console.log(o);
+            $('body').html( o );
+        });
+    }
+
 
 </script>
 </body>

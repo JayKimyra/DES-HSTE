@@ -36,9 +36,10 @@
                 <p style="text-align:justify;">
                 <div th:if="${solve.isCorrect()}" class="alert alert-success"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
                     <span th:text="'Ваш ответ: ' + ${solve.getAnswer()}"></span></div>
-                <div th:if="${!solve.isCorrect()}" class="alert alert-danger"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/>
+                <div th:if="${!solve.isCorrect()}" class="alert alert-danger"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
                     <span th:text="'Ваш ответ: ' + ${solve.getAnswer()}"></span></div>
                 </p>
+                <img th:if="${solve.getImgUrl() != null}" th:src="${solve.getImgUrl()}" alt="">
                 <ul class="blog-info-link">
                     <li><a href="#"><i class="fa fa-user"></i> <span th:text="${solve.getProblem().getAuthor().getLogin()}"></span> </a></li>
                     <li><a href="#"><i class="fa-solid fa-bolt"></i> Тип задания: <span th:text="${solve.getProblem().getType()}"></span></a></li>

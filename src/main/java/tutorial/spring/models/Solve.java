@@ -48,6 +48,8 @@ public class Solve implements Serializable{
     private String answer;
     @Column(nullable = false)
     private boolean isCorrect;
+    @Column
+    private String imgUrl = null;
     @Column(nullable = false)
     private long points;
 

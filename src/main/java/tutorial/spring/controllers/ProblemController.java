@@ -59,7 +59,7 @@ public class ProblemController {
         return "problems/new";
     }
     @PostMapping()
-    public String create(@ModelAttribute("problem") Problem problem,HttpSession session){
+    public String create(@ModelAttribute("problem") Problem problem,HttpSession session,@RequestParam boolean isDrawable){
         User user = getUserFromSession(session);
         if (user == null){
             return "redirect:/problems";
@@ -69,6 +69,7 @@ public class ProblemController {
         if (problem.getImgUrl().replace(" ","").isEmpty()){
             problem.setImgUrl(null);
         }
+        problem.setDrawable(isDrawable);
         problemDAO.create(problem);
         return "redirect:/problems";
     }
